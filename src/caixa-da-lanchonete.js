@@ -6,6 +6,7 @@ class CaixaDaLanchonete {
         let quantidadeInvalida = false;
         let quantidadeItens = false;
         let itemInexistente = false;
+        let itemPrincipal
 
         const cardapio = new TabelaValores;
 
@@ -30,7 +31,11 @@ class CaixaDaLanchonete {
                     
                   }
                   const itemData = cardapio.getItem(codigo);
+
                   if(itemData != null){
+                    if(itemData.codigo != 'queijo' && itemData.codigo != 'chantily'){
+                      itemPrincipal = true;
+                    }
                     totalCompra += parseFloat(itemData.valor * quantidade);
                   }else{
                     itemInexistente = true;
@@ -63,6 +68,9 @@ class CaixaDaLanchonete {
           }
           if(quantidadeItens || itemInexistente){
             return 'Item inválido!';
+          }
+          if(!itemPrincipal){
+            return 'Item extra não pode ser pedido sem o principal';
           }
           
             return "R$ " + totalCompra.toFixed(2).replace('.', ',');
